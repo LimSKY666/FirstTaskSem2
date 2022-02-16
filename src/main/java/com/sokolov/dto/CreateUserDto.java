@@ -1,5 +1,8 @@
 package com.sokolov.dto;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 public class CreateUserDto {
@@ -7,9 +10,11 @@ public class CreateUserDto {
     @NotBlank(message = "Name shouldn't be blank!")
     private String name;
 
+    @Email
     @NotBlank(message = "Email shouldn't be blank!")
     private String email;
 
+    @Length(min = 5, message = "Password should contains at least 5 symbols")
     @NotBlank(message = "Password shouldn't be blank!")
     private String password;
 
