@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WeatherService {
+public class WeatherHelper {
     private final static String API_KEY = "bab513ef79d6df6c6b4fb4f13eaefa92";
     private final static String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
     private final static JsonParser jsonParser = new JsonParser();

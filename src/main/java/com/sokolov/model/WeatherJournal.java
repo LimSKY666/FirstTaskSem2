@@ -10,6 +10,9 @@ public class WeatherJournal {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @OneToOne(mappedBy = "weatherJournal")
+    private WeatherRequest weatherRequest;
+
     private String temp;
 
     private String feelsLike;

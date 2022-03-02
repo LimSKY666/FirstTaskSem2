@@ -1,6 +1,6 @@
 package com.sokolov.controller;
 
-import com.sokolov.helper.WeatherService;
+import com.sokolov.helper.WeatherHelper;
 import com.sokolov.model.User;
 import com.sokolov.model.WeatherJournal;
 import com.sokolov.repository.UserRepository;
@@ -16,7 +16,7 @@ import java.util.*;
 @RestController
 public class WeatherController {
 
-    private final WeatherService weatherService = new WeatherService();
+    private final WeatherHelper weatherHelper = new WeatherHelper();
 
     private final WeatherRepository weatherRepository;
 
@@ -34,7 +34,7 @@ public class WeatherController {
         List<User> users = userRepository.findAll();
         for (User user : users) {
             if (user.getEmail().equals(email)) {
-                Map<String, String> result = weatherService.get(city.orElse("Kazan"));
+                Map<String, String> result = weatherHelper.get(city.orElse("Kazan"));
                 return weatherRepository.save(new WeatherJournal(result.get("temp"), result.get("feels_like"), result.get("humidity"), result.get("wind_speed"), result.get("name"), new Date(), email));
             }
         }
