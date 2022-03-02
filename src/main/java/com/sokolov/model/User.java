@@ -1,6 +1,7 @@
 package com.sokolov.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -11,9 +12,13 @@ public class User {
 
     private String name;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<WeatherRequest> weatherRequestList;
 
     public User() {}
 
