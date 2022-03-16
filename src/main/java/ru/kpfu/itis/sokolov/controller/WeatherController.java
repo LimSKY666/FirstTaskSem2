@@ -1,6 +1,7 @@
 package ru.kpfu.itis.sokolov.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,19 +77,19 @@ public class WeatherController {
         String result = "";
         for (Weather weather : weatherList) {
             if (weather.getName().equals(city)) {
-                result += weather.toString() + "\n";
+                result += weather + "\n";
             }
         }
         return result;
     }
 
     @GetMapping("/getWeather")
-    public String getWeather(@RequestParam String email) {
+    public String getWeather(Authentication authentication) {
         List<User> users = userRepository.findAll();
         List<Weather> weatherList = weatherRepository.findAll();
         String result = "";
         for (User user : users) {
-            if (user.getEmail().equals(email)) {
+            if (user.getEmail().equals(authentication.getName())) {
                 for (Weather weather : weatherList) {
                     result += weather.toString() + "\n";
                 }
