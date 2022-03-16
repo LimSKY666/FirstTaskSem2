@@ -1,23 +1,27 @@
-package com.sokolov.dto;
+package ru.kpfu.itis.sokolov.dto;
 
-import com.sokolov.model.User;
+import javax.validation.constraints.NotBlank;
 
-public class UserDto {
+public class CreateUserDto {
 
-    private Integer id;
-
+    @NotBlank(message = "Name shouldn't be blank!")
     private String name;
 
+    @NotBlank(message = "Email shouldn't be blank!")
     private String email;
 
     private String password;
 
-    public Integer getId() {
-        return id;
+    public CreateUserDto() {
+
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -36,15 +40,9 @@ public class UserDto {
         this.email = email;
     }
 
-    public UserDto(Integer id, String name, String email, String password) {
-        this.id = id;
+    public CreateUserDto(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
     }
-
-    public static UserDto fromModel(User user) {
-        return new UserDto(user.getId(), user.getName(), user.getEmail(), user.getPassword());
-    }
 }
-

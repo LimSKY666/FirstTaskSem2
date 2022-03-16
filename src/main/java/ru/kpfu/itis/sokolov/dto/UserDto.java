@@ -1,21 +1,14 @@
-package com.sokolov.dto;
+package ru.kpfu.itis.sokolov.dto;
 
-import org.hibernate.validator.constraints.Length;
+import ru.kpfu.itis.sokolov.model.User;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+public class UserDto {
+    private Integer id;
 
-public class CreateUserDto {
-
-    @NotBlank(message = "Name shouldn't be blank!")
     private String name;
 
-    @Email
-    @NotBlank(message = "Email shouldn't be blank!")
     private String email;
 
-    @Length(min = 5, message = "Password should contains at least 5 symbols")
-    @NotBlank(message = "Password shouldn't be blank!")
     private String password;
 
     public String getPassword() {
@@ -24,6 +17,14 @@ public class CreateUserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -42,9 +43,16 @@ public class CreateUserDto {
         this.email = email;
     }
 
-    public CreateUserDto(String name, String email, String password) {
+    public UserDto(Integer id, String name, String email, String password) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
     }
+
+    public static UserDto fromModel(User user) {
+        return new UserDto(user.getId(), user.getName(), user.getEmail(), user.getPassword());
+    }
 }
+
+
