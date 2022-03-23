@@ -1,9 +1,10 @@
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.6.3'
+    id 'org.liquibase.gradle' version '2.0.4'
 }
 
-group 'com.solncev'
+group 'ru.kpfu.itis.sokolov'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -24,11 +25,29 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE'
     implementation 'org.thymeleaf:thymeleaf-spring5:3.0.15.RELEASE'
     implementation 'javax.mail:javax.mail-api:1.6.2'
-    annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
+    implementation 'org.liquibase:liquibase-core:4.9.0'
+    liquibaseRuntime('org.liquibase:liquibase-core:4.9.0')
+    liquibaseRuntime('org.postgresql:postgresql:42.3.3')
 
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation "org.springframework.boot:spring-boot-starter-test:2.6.3"
+    testImplementation "com.h2database:h2:1.4.200"
+    testImplementation "junit:junit:4.12"
+}
+
+def props = new Properties()
+file("src/main/resources/liquibase.properties").withInputStream {props.load(it)}
+
+liquibase {
+    activities {
+        main {
+            changeLogFile props.getProperty("changeLogFile")
+            url props.getProperty("url")
+            username props.getProperty("username")
+            password props.getProperty("password")
+            driver props.getProperty("driver")
+        }
+    }
 }
 
 test {

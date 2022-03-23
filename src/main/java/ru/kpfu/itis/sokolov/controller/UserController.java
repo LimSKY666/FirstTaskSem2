@@ -9,7 +9,6 @@ import ru.kpfu.itis.sokolov.dto.UserDto;
 import ru.kpfu.itis.sokolov.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.Optional;
 
 
@@ -31,7 +30,7 @@ public class UserController {
 
     @GetMapping("/user/{id}")
     @ResponseBody
-    public UserDto get(@PathVariable Integer id) {
+    public UserDto getUser(@PathVariable Integer id) {
         return userService.getById(id);
     }
 

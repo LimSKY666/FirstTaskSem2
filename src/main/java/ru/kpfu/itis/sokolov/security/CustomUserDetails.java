@@ -1,4 +1,4 @@
-package ru.kpfu.itis.sokolov.Security;
+package ru.kpfu.itis.sokolov.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2022-03-23--01-init-tables" author="sokolov">
+        <createTable tableName="users">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="email" type="varchar(100)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="verification_code" type="varchar(64)"> </column>
+        </createTable>
+
+        <createTable tableName="roles">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(64)" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="weather">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="feels_like" type="varchar(64)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(64)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="temp" type="varchar(64)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="time" type="bigint" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="wind_speed" type="varchar(64)" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_role">
+            <column name="user_id" type="integer">
+                <constraints foreignKeyName="fk_user_id" nullable="false" references="users(id)"/>
+            </column>
+            <column name="role_id" type="integer">
+                <constraints foreignKeyName="fk_role_id" nullable="false" references="roles(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="request">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="city" type="varchar(64)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="integer">
+                <constraints foreignKeyName="fk_user_req_id" nullable="false" references="users(id)"/>
+            </column>
+            <column name="weather_id" type="integer">
+                <constraints foreignKeyName="fk_user_id" nullable="false" references="weather(id)"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+
+</databaseChangeLog>
