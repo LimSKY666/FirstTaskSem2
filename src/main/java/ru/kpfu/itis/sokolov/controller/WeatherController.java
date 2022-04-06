@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.kpfu.itis.sokolov.aspect.Loggable;
 import ru.kpfu.itis.sokolov.model.Request;
 import ru.kpfu.itis.sokolov.model.User;
 import ru.kpfu.itis.sokolov.model.Weather;
@@ -38,7 +39,7 @@ public class WeatherController {
     }
 
 
-
+    @Loggable
     @GetMapping("/weather")
     public Weather addWeather(@Valid @RequestParam Optional<String> city, @RequestParam int user_id) throws IOException {
         Map<String, String> result = weatherService.get(city.orElse("Kazan"));
@@ -83,6 +84,7 @@ public class WeatherController {
         return result;
     }
 
+    @Loggable
     @GetMapping("/getWeather")
     public String getWeather(Authentication authentication) {
         List<User> users = userRepository.findAll();
