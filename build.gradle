@@ -26,6 +26,9 @@ dependencies {
     implementation 'org.thymeleaf:thymeleaf-spring5:3.0.15.RELEASE'
     implementation 'javax.mail:javax.mail-api:1.6.2'
     implementation 'org.liquibase:liquibase-core:4.9.0'
+    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.7'
     implementation "org.springframework.boot:spring-boot-starter-aop:2.6.3"
     liquibaseRuntime('org.liquibase:liquibase-core:4.9.0')
     liquibaseRuntime('org.postgresql:postgresql:42.3.3')

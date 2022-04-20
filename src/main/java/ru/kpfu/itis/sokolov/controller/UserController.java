@@ -1,5 +1,9 @@
 package ru.kpfu.itis.sokolov.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -22,12 +26,18 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Operation(summary = "Returns all users")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Users were get",
+            content = {@Content(mediaType = "application/json")})})
     @GetMapping("/user")
     @ResponseBody
     public Iterable<UserDto> getAll(@RequestParam(value = "name", required = false) Optional<String> name) {
         return name.isEmpty() ? userService.getAll() : userService.getAllByName(name.get());
     }
 
+    @Operation(summary = "Returns user by id")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Users was get by id",
+            content = {@Content(mediaType = "application/json")})})
     @GetMapping("/user/{id}")
     @ResponseBody
     public UserDto getUser(@PathVariable Integer id) {
@@ -42,6 +52,9 @@ public class UserController {
 //    }
 
 
+    @Operation(summary = "Returns sign up success page")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Page was get",
+            content = {@Content(mediaType = "text/html")})})
     @PostMapping("/sign_up")
     public String signUp(@ModelAttribute(name = "user") CreateUserDto userDto, HttpServletRequest request) {
         String url = request.getRequestURL().toString().replace(request.getServletPath(), "");
@@ -49,6 +62,9 @@ public class UserController {
         return "sign_up_success";
     }
 
+    @Operation(summary = "Returns verification page")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Page was get",
+            content = {@Content(mediaType = "text/html")})})
     @GetMapping("/verify")
     public String verify(@Param("code") String code) {
         if (userService.verify(code)) {

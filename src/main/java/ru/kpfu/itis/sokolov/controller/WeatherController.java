@@ -1,9 +1,13 @@
 package ru.kpfu.itis.sokolov.controller;
 
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kpfu.itis.sokolov.aspect.Loggable;
@@ -14,7 +18,6 @@ import ru.kpfu.itis.sokolov.repository.RequestRepository;
 import ru.kpfu.itis.sokolov.repository.UserRepository;
 import ru.kpfu.itis.sokolov.repository.WeatherRepository;
 import ru.kpfu.itis.sokolov.service.WeatherService;
-import ru.kpfu.itis.sokolov.model.Weather;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -38,7 +41,9 @@ public class WeatherController {
         this.requestRepository = requestRepository;
     }
 
-
+    @Operation(summary = "Returns weather by city")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Weather was get",
+            content = {@Content(mediaType = "application/json")})})
     @Loggable
     @GetMapping("/weather")
     public Weather addWeather(@Valid @RequestParam Optional<String> city, @RequestParam int user_id) throws IOException {
@@ -48,6 +53,9 @@ public class WeatherController {
         return weatherRepository.save(weather);
     }
 
+    @Operation(summary = "Returns all requests from user with id")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Requests were get",
+            content = {@Content(mediaType = "application/json")})})
     @GetMapping("/getAllRequestById")
     public String getAllRequestByID(@RequestParam int id) {
         List<Request> requestList = requestRepository.findAll();
@@ -60,6 +68,9 @@ public class WeatherController {
         return result;
     }
 
+    @Operation(summary = "Returns all requests history by city")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Requests were get",
+            content = {@Content(mediaType = "application/json")})})
     @GetMapping("/getAllRequestByCity")
     public String getAllRequestByCity(@RequestParam String city) {
         List<Request> requestList = requestRepository.findAll();
@@ -72,6 +83,9 @@ public class WeatherController {
         return result;
     }
 
+    @Operation(summary = "Returns all weather history by city")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Weather were get",
+            content = {@Content(mediaType = "application/json")})})
     @GetMapping("/getAllWeatherByCity")
     public String getAllWeatherByCity(@RequestParam String city) {
         List<Weather> weatherList = weatherRepository.findAll();
@@ -84,6 +98,9 @@ public class WeatherController {
         return result;
     }
 
+    @Operation(summary = "Returns weather if user log in")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Weather was get",
+            content = {@Content(mediaType = "application/json")})})
     @Loggable
     @GetMapping("/getWeather")
     public String getWeather(Authentication authentication) {
@@ -100,6 +117,9 @@ public class WeatherController {
         return result;
     }
 
+    @Operation(summary = "Returns all weather history and users")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Weather and users were get",
+            content = {@Content(mediaType = "application/json")})})
     @GetMapping("/getAll")
     public String getAll(){
         List<User> users = userRepository.findAll();
